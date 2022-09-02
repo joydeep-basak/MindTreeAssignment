@@ -1,9 +1,14 @@
 package com.mindree.assignment.service.impl;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,21 +17,19 @@ import com.mindree.assignment.entity.ProductEntity;
 import com.mindree.assignment.model.Product;
 import com.mindree.assignment.repository.ProductRepository;
 import com.mindree.assignment.service.ProductService;
+import com.mindree.assignment.util.ProductDtoToEntityMapper;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ProductDtoToEntityMapper mapper;
+//    = Mappers.getMapper(ProductDtoToEntityMapper.class);
 
-	@PostConstruct
+//	@PostConstruct
 	public void init() throws SQLException, ClassNotFoundException, IOException {
         Class.forName("org.hsqldb.jdbc.JDBCDriver");
  
@@ -75,13 +78,16 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository repository;
 
 	@Override
-	public ProductEntity findProductById(long id) {
-		Optional<ProductEntity> product = repository.findById(id);
-		if (product.isPresent()) {
-			return repository.findById(id).get();
+	public Product findProductById(long id) {
+		Optional<ProductEntity> productEntity = repository.findById(id);
+		Product product = null;
+		if (productEntity.isPresent()) {
+			product = mapper.sourceToDestinationBook(repository.findById(id).get());
+			return product;
 		} else {
-			return product.orElse(null);
+			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
 		}
+		return product;
 	}
 
 	@Override
@@ -97,8 +103,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductEntity> findAllProduct() {
-		return repository.findAll();
+	public List<Product> findAllProduct() {
+		List<Product> productList = new ArrayList<Product>();
+		repository.findAll().forEach(entity -> {
+			Product product = mapper.sourceToDestinationBook(entity);
+			productList.add(product);
+		});
+		return productList;
 	}
 
 

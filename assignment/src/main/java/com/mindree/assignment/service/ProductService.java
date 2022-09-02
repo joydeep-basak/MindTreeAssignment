@@ -7,9 +7,9 @@ import com.mindree.assignment.model.Product;
 
 public interface ProductService {
 	
-	List<ProductEntity> findAllProduct();
+	List<Product> findAllProduct();
 
-	ProductEntity findProductById(long id);
+	Product findProductById(long id);
 	
 	List<ProductEntity> findProductByName(String productName);
 	

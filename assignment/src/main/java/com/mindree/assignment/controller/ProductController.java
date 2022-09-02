@@ -28,22 +28,24 @@ public class ProductController {
 	ProductService productService;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<ProductEntity>> getAllProduct() {
-		return new ResponseEntity<List<ProductEntity>>(productService.findAllProduct(), HttpStatus.OK);
+	public ResponseEntity<List<Product>> getAllProduct() {
+		return new ResponseEntity<List<Product>>(productService.findAllProduct(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{productId}")
-	public ResponseEntity<Product> getProductDetails(@PathVariable("productId") int productId) {
+	public ResponseEntity<Product> getProductDetails(@PathVariable("productId") long productId) {
 		log.info("Get ProductDetails called with product id [{}]", productId);
 		
-		Product product = Book.builder()
+		Product product = productService.findProductById(productId);
+		
+		/*Product product = Book.builder()
 				.prodName("Test")
 				.genre("Test genre")
 				.productid(1)
 				.publications("Test publication")
 				.prodName("Test Book")
 				.author("Test Author")
-				.build();
+				.build();*/
 		
 		product.setProductType(ProductEnum.APPARAL);
 		
