@@ -1,4 +1,4 @@
-package com.mindree.assignment.entity;
+package com.mindtree.assignment.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,12 +46,4 @@ public class ProductEntity {
 	
 	private String design;
 	
-	/*price FLOAT NOT NULL,
-	  productType VARCHAR(30) NOT NULL,
-	  genre VARCHAR(50),
-	  author VARCHAR(50),
-	  publications VARCHAR(50),
-	  atype VARCHAR(50),
-	  brand VARCHAR(50),
-	  design VARCHAR(50),*/
 }

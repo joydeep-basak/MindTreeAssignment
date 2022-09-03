@@ -1,9 +1,9 @@
-package com.mindree.assignment.service;
+package com.mindtree.assignment.service;
 
 import java.util.List;
 
-import com.mindree.assignment.entity.ProductEntity;
-import com.mindree.assignment.model.Product;
+import com.mindtree.assignment.entity.ProductEntity;
+import com.mindtree.assignment.model.Product;
 
 public interface ProductService {
 	

@@ -1,4 +1,4 @@
-package com.mindree.assignment.controller;
+package com.mindtree.assignment.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mindree.assignment.entity.ProductEntity;
-import com.mindree.assignment.model.Book;
-import com.mindree.assignment.model.Product;
-import com.mindree.assignment.model.ProductEnum;
-import com.mindree.assignment.service.ProductService;
+import com.mindtree.assignment.model.Book;
+import com.mindtree.assignment.model.Product;
+import com.mindtree.assignment.model.ProductEnum;
+import com.mindtree.assignment.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 

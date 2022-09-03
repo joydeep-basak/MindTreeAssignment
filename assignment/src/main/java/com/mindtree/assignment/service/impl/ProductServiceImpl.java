@@ -1,4 +1,4 @@
-package com.mindree.assignment.service.impl;
+package com.mindtree.assignment.service.impl;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,14 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mindree.assignment.entity.ProductEntity;
-import com.mindree.assignment.model.Product;
-import com.mindree.assignment.repository.ProductRepository;
-import com.mindree.assignment.service.ProductService;
-import com.mindree.assignment.util.ProductDtoToEntityMapper;
+import com.mindtree.assignment.entity.ProductEntity;
+import com.mindtree.assignment.model.Book;
+import com.mindtree.assignment.model.Product;
+import com.mindtree.assignment.repository.ProductRepository;
+import com.mindtree.assignment.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductServiceImpl implements ProductService {
 	
-	@Autowired
-	private ProductDtoToEntityMapper mapper;
+//	@Autowired
+//	private ProductDtoToEntityMapper mapper;
 //    = Mappers.getMapper(ProductDtoToEntityMapper.class);
 
 //	@PostConstruct
@@ -80,12 +81,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findProductById(long id) {
 		Optional<ProductEntity> productEntity = repository.findById(id);
-		Product product = null;
+		Product product = new Book();
 		if (productEntity.isPresent()) {
-			product = mapper.sourceToDestinationBook(repository.findById(id).get());
+			BeanUtils.copyProperties(repository.findById(id).get(), product);
+//			product = mapper.sourceToDestinationBook(repository.findById(id).get());
 			return product;
 		} else {
-			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
+			BeanUtils.copyProperties(productEntity.orElse(null), product);
+//			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
 		}
 		return product;
 	}
@@ -105,8 +108,9 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findAllProduct() {
 		List<Product> productList = new ArrayList<Product>();
+		Book product = new Book();
 		repository.findAll().forEach(entity -> {
-			Product product = mapper.sourceToDestinationBook(entity);
+			BeanUtils.copyProperties(entity, product);//mapper.sourceToDestinationBook(entity);
 			productList.add(product);
 		});
 		return productList;

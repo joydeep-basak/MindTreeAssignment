@@ -1,4 +1,4 @@
-package com.mindree.assignment.model;
+package com.mindtree.assignment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
