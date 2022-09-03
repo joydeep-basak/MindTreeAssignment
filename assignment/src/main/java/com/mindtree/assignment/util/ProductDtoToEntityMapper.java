@@ -9,7 +9,7 @@ import com.mindtree.assignment.entity.ProductEntity;
 import com.mindtree.assignment.model.Apparal;
 import com.mindtree.assignment.model.Book;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ProductDtoToEntityMapper {
 	ProductDtoToEntityMapper INSTANCE = Mappers.getMapper(ProductDtoToEntityMapper.class);
 	

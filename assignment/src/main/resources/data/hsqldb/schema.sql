@@ -30,6 +30,5 @@ CREATE TABLE Cart (
   userid BIGINT NOT NULL,
   productid BIGINT NOT NULL,
   quantity INT,
-  price FLOAT,
   PRIMARY KEY(productid, userid)
 );
