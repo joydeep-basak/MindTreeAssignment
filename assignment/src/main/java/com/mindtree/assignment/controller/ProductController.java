@@ -1,6 +1,5 @@
 package com.mindtree.assignment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mindtree.assignment.model.Book;
 import com.mindtree.assignment.model.Product;
-import com.mindtree.assignment.model.ProductEnum;
 import com.mindtree.assignment.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +43,7 @@ public class ProductController {
 				.author("Test Author")
 				.build();*/
 		
-		product.setProductType(ProductEnum.APPARAL);
+//		product.setProductType(ProductEnum.APPARAL);
 		
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
@@ -55,42 +52,39 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getProductDetailsByName(@PathVariable("prodName") String prodName) {
 		log.info("Get ProductDetails called with product name [{}]", prodName);
 		
-		List<Product> productList = new ArrayList<>();
-		Product product = Book.builder()
-				.prodName("Test")
-				.genre("Test genre")
-				.productid(1)
-				.publications("Test publication")
-				.prodName(prodName)
-				.author("Test Author")
-				.build();
+//		List<Product> productList = new ArrayList<>();
+//		Product product = Book.builder()
+//				.prodName("Test")
+//				.genre("Test genre")
+//				.productid(1)
+//				.publications("Test publication")
+//				.prodName(prodName)
+//				.author("Test Author")
+//				.build();
+//		
+//		product.setProductType(ProductEnum.APPARAL);
+//		productList.add(product);
 		
-		product.setProductType(ProductEnum.APPARAL);
-		
-		productList.add(product);
-		
-		return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+		return new ResponseEntity<List<Product>>(productService.findProductByName(prodName), HttpStatus.OK);
 	}
 	
 	@GetMapping("prodbytype/{productType}")
 	public ResponseEntity<List<Product>> getProductDetailsByType(@PathVariable("productType") String productType) {
 		log.info("Get ProductDetails called with product name [{}]", productType);
 		
-		List<Product> productList = new ArrayList<>();
+//		List<Product> productList = new ArrayList<>();
+//		Product product = Book.builder()
+//				.prodName("Test")
+//				.genre("Test genre")
+//				.productid(1)
+//				.publications("Test publication")
+//				.prodName("Test Product")
+//				.author("Test Author")
+//				.build();
+//		
+//		productList.add(product);
+//		product.setProductType(ProductEnum.APPARAL);
 		
-		Product product = Book.builder()
-				.prodName("Test")
-				.genre("Test genre")
-				.productid(1)
-				.publications("Test publication")
-				.prodName("Test Product")
-				.author("Test Author")
-				.build();
-		
-		productList.add(product);
-		
-		product.setProductType(ProductEnum.APPARAL);
-		
-		return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+		return new ResponseEntity<List<Product>>(productService.findProductByType(productType), HttpStatus.OK);
 	}
 }

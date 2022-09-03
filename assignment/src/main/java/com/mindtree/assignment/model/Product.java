@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public abstract class Product {
 
-	protected int productid;
+	protected long productid;
 	
 	protected String prodName;
 	

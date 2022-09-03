@@ -11,7 +11,7 @@ public interface ProductService {
 
 	Product findProductById(long id);
 	
-	List<ProductEntity> findProductByName(String productName);
+	List<Product> findProductByName(String productName);
 	
-	List<ProductEntity> findProductByType(String productType);
+	List<Product> findProductByType(String productType);
 }
