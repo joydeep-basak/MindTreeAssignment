@@ -1,7 +1,6 @@
 package com.mindtree.assignment.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumns;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,7 +20,6 @@ import lombok.Data;
 @Data
 @Table(name="CartProduct")
 @IdClass(CartProductId.class)
-//@NamedQuery(name = "CartProductEntity.addToCart", query = "insert into Cart")
 @NamedQuery(name = "CartProductEntity.updateToCart", query = "UPDATE CartProductEntity c SET c.quantity = ?3 WHERE c.cartid = ?1 "
 		+ "AND c.productid = ?2")
 @NamedQuery(name = "CartProductEntity.deleteFromCart", query = "DELETE FROM CartProductEntity c WHERE c.cartid = ?1 AND c.productid = ?2")
@@ -37,7 +36,17 @@ public class CartProductEntity {
 	@Column(name = "quantity")
 	private int quantity;
 	
-//	@OneToMany(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "productid", referencedColumnName = "productid")
-//	private Set<ProductEntity> productList;
+//	@OneToMany(cascade = CascadeType.DETACH)
+//	@JoinColumns({    
+//		@JoinColumn(name = "productid", referencedColumnName = "productid"),
+//		})
+//	private List<ProductEntity> productList;
+	
+//	@OneToOne(cascade = CascadeType.DETACH)
+//	@JoinColumns({    
+//		@JoinColumn(name = "cartid", referencedColumnName = "cartid", insertable =  false, updatable = false)
+//		})
+//	private CartEntity cart;
+	
+	
 }

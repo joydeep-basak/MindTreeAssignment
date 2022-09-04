@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,7 +28,15 @@ public class CartEntity {
 	@Id
 	private long userid;
 	
-//	@OneToMany(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "cartid", referencedColumnName = "cartid")
-//	private List<CartProductEntity> cartProduct;
+//	@OneToOne(cascade = CascadeType.DETACH)
+//	@JoinColumns({    
+//		@JoinColumn(name = "cartid", referencedColumnName = "cartid"),
+//		})
+//	private CartProductEntity cart;
+//	
+//	@OneToOne(cascade = CascadeType.DETACH)
+//	@JoinColumns({    
+//		@JoinColumn(name = "userid", referencedColumnName = "userid", insertable =  false, updatable = false)
+//		})
+//	private UserEntity user;
 }

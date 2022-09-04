@@ -35,7 +35,7 @@ public class UserEntity {
 	@Column(name = "pincode")
 	private String pincode;
 
-//	@OneToMany(cascade = CascadeType.ALL)
+//	@OneToOne(cascade = CascadeType.DETACH)
 //	@JoinColumn(name = "userid", referencedColumnName = "userid")
 //	private List<CartEntity> cart;
 

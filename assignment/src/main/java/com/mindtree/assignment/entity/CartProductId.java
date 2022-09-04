@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class CartProductId implements Serializable {
 
-	private static final long serialVersionUID = 4213362064457578387L;
-
 	private long cartid;
 	
 	private long productid;

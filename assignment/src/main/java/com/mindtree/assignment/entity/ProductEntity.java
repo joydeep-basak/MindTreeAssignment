@@ -1,6 +1,5 @@
 package com.mindtree.assignment.entity;
 
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
