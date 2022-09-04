@@ -20,7 +20,7 @@ import lombok.Data;
 @IdClass(CartUserId.class)
 @Data
 @Table(name="Cart")
-@NamedQuery(name = "CartEntity.findCartUserId", query = "FROM CartEntity WHERE userid = ?1")
+@NamedQuery(name = "CartEntity.findCartByUserId", query = "FROM CartEntity WHERE userid = ?1")
 public class CartEntity {
 	@Id
 	private long cartid;

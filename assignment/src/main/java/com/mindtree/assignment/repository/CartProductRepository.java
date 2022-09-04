@@ -9,12 +9,14 @@ import com.mindtree.assignment.entity.CartProductId;
 
 public interface CartProductRepository extends JpaRepository<CartProductEntity, CartProductId>{
 	
-	int updateToCart(long userid, long productid, int quantity);
+	int updateToCart(long cartid, long productid, int quantity);
 	
-	List<CartProductEntity> viewFromCart(long userid);
+	List<CartProductEntity> viewFromCart(long cartid);
 	
-	List<CartProductEntity> deleteFromCart(long userid, long productid);
+	CartProductEntity getCartDataByUserAndProduct(long cartid, long productid);
 	
-	int removeAllFromCart(long userid);
+	List<CartProductEntity> deleteFromCart(long cartid, long productid);
+	
+	int removeAllFromCart(long cartid);
 
 }
