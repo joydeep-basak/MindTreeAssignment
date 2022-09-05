@@ -1,14 +1,21 @@
 package com.mindtree.assignment.service;
 
+import java.util.List;
+
+import com.mindtree.assignment.entity.CartProductEntity;
+import com.mindtree.assignment.exception.ProductNotFoundException;
+import com.mindtree.assignment.exception.UserNotFoundException;
+import com.mindtree.assignment.model.Cart;
+
 public interface CartService {
 
-	public void addToCart(long userid, int productid, int quantity);
+	public CartProductEntity addToCart(long userid, long productid, int quantity) throws ProductNotFoundException;
 	
-	public void removeFromCart(long userid, int productid);
+	public void removeFromCart(long userid, long productid) throws ProductNotFoundException, UserNotFoundException;
 	
-	public void removeAllFromCart(long userid);
+	public void removeAllFromCart(long userid) throws UserNotFoundException, ProductNotFoundException;
 	
-	public void updateCart(long userid, int productid, int quantity);
+	public void updateCart(long userid, long productid, int quantity) throws ProductNotFoundException;
 	
-	public void viewCart(long userid);
+	public List<Cart> viewCart(long userid) throws ProductNotFoundException, UserNotFoundException;
 }

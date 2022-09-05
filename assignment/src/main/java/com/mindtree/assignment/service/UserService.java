@@ -7,4 +7,6 @@ import com.mindtree.assignment.model.User;
 public interface UserService {
 
 	List<User> findAllUser();
+	
+	User addUser(User user);
 }

@@ -22,8 +22,9 @@ import lombok.Data;
 @IdClass(CartProductId.class)
 @NamedQuery(name = "CartProductEntity.updateToCart", query = "UPDATE CartProductEntity c SET c.quantity = ?3 WHERE c.cartid = ?1 "
 		+ "AND c.productid = ?2")
+@NamedQuery(name = "CartProductEntity.getCartDataByCartAndProduct", query = "FROM CartProductEntity WHERE cartid = ?1 AND productid = ?2")
 @NamedQuery(name = "CartProductEntity.deleteFromCart", query = "DELETE FROM CartProductEntity c WHERE c.cartid = ?1 AND c.productid = ?2")
-@NamedQuery(name = "CartProductEntity.viewFromCart", query = "FROM CartProductEntity WHERE cartid = ?1")
+@NamedQuery(name = "CartProductEntity.getCartData", query = "FROM CartProductEntity WHERE cartid = ?1")
 @NamedQuery(name = "CartProductEntity.removeAllFromCart", query = "DELETE FROM CartProductEntity WHERE cartid = ?1")
 public class CartProductEntity {
 

@@ -13,10 +13,9 @@ public class Cart {
 
 	private long userid;
 	
+	private long cartid;
+	
 	private long productid;
 	
 	private int quantity;
-//	 userid BIGINT NOT NULL,
-//	  productid BIGINT NOT NULL,
-//	  quantity INT,
 }

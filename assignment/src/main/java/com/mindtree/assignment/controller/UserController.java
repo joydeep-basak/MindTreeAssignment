@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +30,11 @@ public class UserController {
 		List<User> users = userService.findAllUser();
 		log.info("Total Users listed [{}]", users.size());
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
+
+	@PostMapping(produces = "application/json", path = "/adduser")
+	public ResponseEntity<User> addUser(@RequestBody User user) {
+		return new ResponseEntity<User>(userService.addUser(user), HttpStatus.OK);
 	}
 	
 }

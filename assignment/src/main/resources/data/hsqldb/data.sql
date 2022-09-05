@@ -17,4 +17,7 @@ INSERT INTO User (username, address, pincode) VALUES ('user2', 'address2', 'pinc
 INSERT INTO User (username, address, pincode) VALUES ('user3', 'address3', 'pincode3');
 INSERT INTO User (username, address, pincode) VALUES ('user4', 'address4', 'pincode4');
 
-INSERT INTO CART (userid) values (1);
+INSERT INTO CART (userid, cartid) values (1, 1);
+INSERT INTO CART (userid, cartid) values (2, 2);
+INSERT INTO CART (userid, cartid) values (3, 3);
+INSERT INTO CART (userid, cartid) values (4, 4);

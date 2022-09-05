@@ -11,9 +11,9 @@ public interface CartProductRepository extends JpaRepository<CartProductEntity, 
 	
 	int updateToCart(long cartid, long productid, int quantity);
 	
-	List<CartProductEntity> viewFromCart(long cartid);
+	List<CartProductEntity> getCartData(long cartid);
 	
-	CartProductEntity getCartDataByUserAndProduct(long cartid, long productid);
+	CartProductEntity getCartDataByCartAndProduct(long cartid, long productid);
 	
 	List<CartProductEntity> deleteFromCart(long cartid, long productid);
 	
