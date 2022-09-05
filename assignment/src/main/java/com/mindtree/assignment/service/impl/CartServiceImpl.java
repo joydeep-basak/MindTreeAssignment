@@ -45,9 +45,9 @@ public class CartServiceImpl implements CartService {
 			cardProductEntity.setQuantity(quantity);
 			return cartProductRepo.save(cardProductEntity);
 		} else {
-			if (quantity == 0) {
+			if (quantity == 0 && cardProductEntity != null) {
 				cartProductRepo.removeAllFromCart(entity.getCartid());
-			} else {
+			} else if (cardProductEntity != null){
 				cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity); 
 			}
 			return cartProductRepo.save(cardProductEntity);
