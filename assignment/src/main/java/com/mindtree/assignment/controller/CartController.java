@@ -2,6 +2,8 @@ package com.mindtree.assignment.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,7 @@ public class CartController {
 	}
 
 	@PostMapping(path="/addtocart", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) throws ProductNotFoundException {
+	public ResponseEntity<Cart> addToCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException {
 		CartProductEntity cartProduct = cartService.addToCart(cart.getUserid(), cart.getProductid(), cart.getQuantity());
 		Cart cartResponse = new Cart();
 		cartResponse.setUserid(cart.getUserid());

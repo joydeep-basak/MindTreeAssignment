@@ -1,5 +1,7 @@
 package com.mindtree.assignment.model;
 
+import com.mindtree.assignment.constraint.Negetive;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,5 +19,6 @@ public class Cart {
 	
 	private long productid;
 	
+	@Negetive(message="Quantity can not be negetive")
 	private int quantity;
 }

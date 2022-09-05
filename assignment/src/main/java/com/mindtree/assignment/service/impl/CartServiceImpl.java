@@ -38,20 +38,20 @@ public class CartServiceImpl implements CartService {
 		}
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		CartProductEntity cardProductEntity = cartProductRepo.getCartDataByCartAndProduct(entity.getCartid(), productid);
-		if (cardProductEntity == null) {
+		if (cardProductEntity == null && quantity != 0) {
 			cardProductEntity = new CartProductEntity();
-		}
-		
-		cardProductEntity.setCartid(entity.getCartid());
-		cardProductEntity.setProductid(productid);
-		
-		if (quantity == 0) {
-			cartProductRepo.removeAllFromCart(entity.getCartid());
+			cardProductEntity.setCartid(entity.getCartid());
+			cardProductEntity.setProductid(productid);
+			cardProductEntity.setQuantity(quantity);
+			return cartProductRepo.save(cardProductEntity);
 		} else {
-			cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity); 
+			if (quantity == 0) {
+				cartProductRepo.removeAllFromCart(entity.getCartid());
+			} else {
+				cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity); 
+			}
+			return cartProductRepo.save(cardProductEntity);
 		}
-		return cartProductRepo.save(cardProductEntity);
-		
 	}
 
 	@Override

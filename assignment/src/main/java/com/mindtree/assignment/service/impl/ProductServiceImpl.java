@@ -17,7 +17,7 @@ import com.mindtree.assignment.model.Product;
 import com.mindtree.assignment.model.ProductEnum;
 import com.mindtree.assignment.repository.ProductRepository;
 import com.mindtree.assignment.service.ProductService;
-import com.mindtree.assignment.util.ProductDtoToEntityMapper;
+//import com.mindtree.assignment.util.ProductDtoToEntityMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductServiceImpl implements ProductService {
 	
-	@Autowired
-	private ProductDtoToEntityMapper mapper;
+//	@Autowired
+//	private ProductDtoToEntityMapper mapper;
 
 
 	@Autowired
@@ -42,11 +42,12 @@ public class ProductServiceImpl implements ProductService {
 				product = new Book();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueBook(entity, (Book) product);
-				product = mapper.sourceToDestinationBook(entity);
+//				product = mapper.sourceToDestinationBook(entity);
 				BeanUtils.copyProperties(entity, product);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 			} else {
 				product = new Apparal();
-				product = mapper.sourceToDestinationApparal(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 			}
 //			product = mapper.sourceToDestinationBook(repository.findById(id).get());
@@ -68,14 +69,14 @@ public class ProductServiceImpl implements ProductService {
 				Product product = new Book();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueBook(entity, (Book) product);
-				product = mapper.sourceToDestinationBook(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			} else {
 				Product product = new Apparal();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueApparal(entity, (Apparal) product);
-				product = mapper.sourceToDestinationApparal(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			}
@@ -93,14 +94,14 @@ public class ProductServiceImpl implements ProductService {
 				Product product = new Book();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueBook(entity, (Book) product);
-				product = mapper.sourceToDestinationBook(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			} else {
 				Product product = new Apparal();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueApparal(entity, (Apparal) product);
-				product = mapper.sourceToDestinationApparal(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			}
@@ -117,14 +118,14 @@ public class ProductServiceImpl implements ProductService {
 				Product product = new Book();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueBook(entity, (Book) product);
-				product = mapper.sourceToDestinationBook(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			} else {
 				Product product = new Apparal();
 //				BeanUtils.copyProperties(entity, product);
 //				copySpecialValueApparal(entity, (Apparal) product);
-				product = mapper.sourceToDestinationApparal(entity);
+				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			}
@@ -141,10 +142,10 @@ public class ProductServiceImpl implements ProductService {
 		BeanUtils.copyProperties(productEntity, product);
 	}
 
-	@Bean
-	public ProductDtoToEntityMapper getMapper() {
-		ProductDtoToEntityMapper mapper
-	    = Mappers.getMapper(ProductDtoToEntityMapper.class);
-		return mapper;
-	}
+//	@Bean
+//	public ProductDtoToEntityMapper getMapper() {
+//		ProductDtoToEntityMapper mapper
+//	    = Mappers.getMapper(ProductDtoToEntityMapper.class);
+//		return mapper;
+//	}
 }
