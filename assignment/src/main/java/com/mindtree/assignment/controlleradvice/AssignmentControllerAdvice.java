@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.mindtree.assignment.exception.NoCartDataFoundException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
+import com.mindtree.assignment.model.ErrorModel;
 
 @ControllerAdvice
 public class AssignmentControllerAdvice extends ResponseEntityExceptionHandler {
@@ -38,6 +41,12 @@ public class AssignmentControllerAdvice extends ResponseEntityExceptionHandler {
         body.put("message", "No Product not found in DB");
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+    
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+            ErrorModel error = new ErrorModel(HttpStatus.BAD_REQUEST, "Validation Error", ex.getBindingResult().toString());
+
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(NoCartDataFoundException.class)
