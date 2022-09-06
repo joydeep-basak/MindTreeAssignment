@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.NoCartDataFoundException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
@@ -39,6 +40,17 @@ public class AssignmentControllerAdvice extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", "No Product not found in DB");
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(CartNotExistsException.class)
+    public ResponseEntity<Object> errorCartNotExistsException(
+    		CartNotExistsException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", "No Product exist in the cart");
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }

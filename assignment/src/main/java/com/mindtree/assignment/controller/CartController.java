@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindtree.assignment.entity.CartProductEntity;
+import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
 import com.mindtree.assignment.model.Cart;
@@ -32,7 +33,7 @@ public class CartController {
 	private CartService cartService;
 	
 	@GetMapping(path="/all/{userid}", produces = "application/json")
-	public ResponseEntity<List<Cart>> viewAllCart(@PathVariable("userid") long userid) throws ProductNotFoundException, UserNotFoundException {
+	public ResponseEntity<List<Cart>> viewAllCart(@PathVariable("userid") long userid) throws ProductNotFoundException, UserNotFoundException, CartNotExistsException {
 		log.info("Showing cart of user [{}]", userid);
 		List<Cart> cartList = cartService.viewCart(userid);
 		log.info("Cart size of user [{}]", cartList.size());
@@ -40,12 +41,33 @@ public class CartController {
 	}
 
 	@PostMapping(path="/addtocart", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Cart> addToCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException {
+	public ResponseEntity<Cart> addToCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException, CartNotExistsException {
 		CartProductEntity cartProduct = cartService.addToCart(cart.getUserid(), cart.getProductid(), cart.getQuantity());
 		Cart cartResponse = new Cart();
 		cartResponse.setUserid(cart.getUserid());
 		BeanUtils.copyProperties(cartProduct, cartResponse);
 		return new ResponseEntity<>(cartResponse, HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/updatetocart", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Cart> updateToCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException, CartNotExistsException {
+		CartProductEntity cartProduct = cartService.updateCart(cart.getUserid(), cart.getProductid(), cart.getQuantity());
+		Cart cartResponse = new Cart();
+		cartResponse.setUserid(cart.getUserid());
+		BeanUtils.copyProperties(cartProduct, cartResponse);
+		return new ResponseEntity<>(cartResponse, HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/removeproductfromcart", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> removeProductFromCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException, CartNotExistsException, UserNotFoundException {
+	    cartService.removeFromCart(cart.getUserid(), cart.getProductid());
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping(path="/removecart", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> removeCart(@RequestBody @Valid Cart cart) throws ProductNotFoundException, CartNotExistsException, UserNotFoundException {
+		cartService.removeAllFromCart(cart.getUserid());
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 

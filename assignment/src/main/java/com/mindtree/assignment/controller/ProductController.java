@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.model.Product;
 import com.mindtree.assignment.service.ProductService;
 
@@ -29,7 +30,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/{productId}")
-	public ResponseEntity<Product> getProductDetails(@PathVariable("productId") long productId) {
+	public ResponseEntity<Product> getProductDetails(@PathVariable("productId") long productId) throws ProductNotFoundException {
 		log.info("Get ProductDetails called with product id [{}]", productId);
 		
 		Product product = productService.findProductById(productId);
@@ -49,7 +50,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("prodbyname/{prodName}")
-	public ResponseEntity<List<Product>> getProductDetailsByName(@PathVariable("prodName") String prodName) {
+	public ResponseEntity<List<Product>> getProductDetailsByName(@PathVariable("prodName") String prodName) throws ProductNotFoundException {
 		log.info("Get ProductDetails called with product name [{}]", prodName);
 		
 //		List<Product> productList = new ArrayList<>();
@@ -69,7 +70,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("prodbytype/{productType}")
-	public ResponseEntity<List<Product>> getProductDetailsByType(@PathVariable("productType") String productType) {
+	public ResponseEntity<List<Product>> getProductDetailsByType(@PathVariable("productType") String productType) throws ProductNotFoundException {
 		log.info("Get ProductDetails called with product name [{}]", productType);
 		
 //		List<Product> productList = new ArrayList<>();

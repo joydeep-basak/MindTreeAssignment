@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.mindtree.assignment.entity.ProductEntity;
+import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.model.Apparal;
 import com.mindtree.assignment.model.Book;
 import com.mindtree.assignment.model.Product;
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository repository;
 
 	@Override
-	public Product findProductById(long id) {
+	public Product findProductById(long id) throws ProductNotFoundException {
 		Optional<ProductEntity> productEntity = repository.findById(id);
 		Product product = null;
 		if (productEntity.isPresent()) {
@@ -53,11 +54,9 @@ public class ProductServiceImpl implements ProductService {
 //			product = mapper.sourceToDestinationBook(repository.findById(id).get());
 			return product;
 		} else {
-			BeanUtils.copyProperties(productEntity.orElse(null), product);
+			throw new ProductNotFoundException("Product Not Found");
 //			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
 		}
-		log.info("Product [{}]", product);
-		return product;
 	}
 
 	@Override

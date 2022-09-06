@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mindtree.assignment.entity.CartEntity;
 import com.mindtree.assignment.entity.CartProductEntity;
+import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
 import com.mindtree.assignment.model.Cart;
@@ -32,25 +33,29 @@ public class CartServiceImpl implements CartService {
 	
 
 	@Override
-	public CartProductEntity addToCart(long userid, long productid, int quantity) throws ProductNotFoundException {
+	public CartProductEntity addToCart(long userid, long productid, int quantity) throws ProductNotFoundException, CartNotExistsException {
 		if (!productRepo.existsById(productid)) {
 			throw new ProductNotFoundException("Product not found");
 		}
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		CartProductEntity cardProductEntity = cartProductRepo.getCartDataByCartAndProduct(entity.getCartid(), productid);
-		if (cardProductEntity == null && quantity != 0) {
+		if (cardProductEntity == null && quantity == 0) {
+			throw new CartNotExistsException("No cart exists for the user");
+		}
+		if (quantity >= 0 && cardProductEntity == null) {
 			cardProductEntity = new CartProductEntity();
 			cardProductEntity.setCartid(entity.getCartid());
 			cardProductEntity.setProductid(productid);
 			cardProductEntity.setQuantity(quantity);
 			return cartProductRepo.save(cardProductEntity);
 		} else {
-			if (quantity == 0 && cardProductEntity != null) {
-				cartProductRepo.removeAllFromCart(entity.getCartid());
-			} else if (cardProductEntity != null){
-				cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity); 
+			if (quantity == 0) {
+				cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
+				return cardProductEntity;
+			} else {
+				cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity);
+				return cartProductRepo.save(cardProductEntity);
 			}
-			return cartProductRepo.save(cardProductEntity);
 		}
 	}
 
@@ -67,7 +72,7 @@ public class CartServiceImpl implements CartService {
 		if (cartProductEntityList == null || cartProductEntityList.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		} else {
-			cartProductRepo.removeAllFromCart(entity.getCartid());
+			cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
 		}
 		
 	}
@@ -82,39 +87,47 @@ public class CartServiceImpl implements CartService {
 		if (cartProductEntity == null || cartProductEntity.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		} else {
-			cartProductRepo.removeAllFromCart(entity.getCartid());
+			cartProductRepo.removeCart(entity.getCartid());
 		}
 	}
 
 	@Override
-	public void updateCart(long userid, long productid, int quantity) throws ProductNotFoundException {
+	public CartProductEntity updateCart(long userid, long productid, int quantity) throws ProductNotFoundException, CartNotExistsException {
 
 		if (!productRepo.existsById(productid)) {
 			throw new ProductNotFoundException("Product not found");
 		}
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		CartProductEntity cardProductEntity = cartProductRepo.getCartDataByCartAndProduct(entity.getCartid(), productid);
-		
-		cardProductEntity = new CartProductEntity();
-		cardProductEntity.setCartid(entity.getCartid());
-		cardProductEntity.setProductid(productid);
-		
-		if (quantity == 0) {
-			cartProductRepo.removeAllFromCart(entity.getCartid());
+		if (cardProductEntity == null) {
+//			if (quantity != 0) {
+//				cardProductEntity = new CartProductEntity();
+//				cardProductEntity.setCartid(entity.getCartid());
+//				cardProductEntity.setProductid(productid);
+//				cardProductEntity.setQuantity(quantity);
+//				return cartProductRepo.save(cardProductEntity);
+//			}
+			throw new CartNotExistsException("No product with this type exists");
+			
 		} else {
-			cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity); 
+			if (quantity == 0 && cardProductEntity != null) {
+				cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
+				return cardProductEntity;
+			} else if (cardProductEntity != null){
+				cardProductEntity.setQuantity(quantity);
+				return cartProductRepo.save(cardProductEntity);
+			}
 		}
-		cardProductEntity.setQuantity(quantity);
-		cartProductRepo.save(cardProductEntity);
+		return cardProductEntity;
 		
 	
 	}
 
 	@Override
-	public List<Cart> viewCart(long userid) throws UserNotFoundException, ProductNotFoundException {
+	public List<Cart> viewCart(long userid) throws ProductNotFoundException, CartNotExistsException {
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		if (entity == null) {
-			throw new UserNotFoundException("User or Cart not found");
+			throw new CartNotExistsException("User or Cart not found");
 		}
 		List<CartProductEntity>  cartProductEntity = cartProductRepo.getCartData(entity.getCartid());
 		if (cartProductEntity == null || cartProductEntity.isEmpty()) {

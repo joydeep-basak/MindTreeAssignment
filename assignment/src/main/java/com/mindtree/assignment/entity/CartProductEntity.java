@@ -1,17 +1,10 @@
 package com.mindtree.assignment.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -25,7 +18,8 @@ import lombok.Data;
 @NamedQuery(name = "CartProductEntity.getCartDataByCartAndProduct", query = "FROM CartProductEntity WHERE cartid = ?1 AND productid = ?2")
 @NamedQuery(name = "CartProductEntity.deleteFromCart", query = "DELETE FROM CartProductEntity c WHERE c.cartid = ?1 AND c.productid = ?2")
 @NamedQuery(name = "CartProductEntity.getCartData", query = "FROM CartProductEntity WHERE cartid = ?1")
-@NamedQuery(name = "CartProductEntity.removeAllFromCart", query = "DELETE FROM CartProductEntity WHERE cartid = ?1")
+@NamedQuery(name = "CartProductEntity.removeAllFromCart", query = "DELETE FROM CartProductEntity WHERE cartid = ?1 AND productid = ?2")
+@NamedQuery(name = "CartProductEntity.removeCart", query = "DELETE FROM CartProductEntity WHERE cartid = ?1")
 public class CartProductEntity {
 
 	@Id
