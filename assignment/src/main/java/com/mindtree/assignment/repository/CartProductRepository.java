@@ -20,7 +20,7 @@ public interface CartProductRepository extends JpaRepository<CartProductEntity, 
 	@Transactional(propagation = Propagation.NESTED)
 	int updateToCart(long cartid, long productid, int quantity);
 
-	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	List<CartProductEntity> getCartData(long cartid);
 
 	CartProductEntity getCartDataByCartAndProduct(long cartid, long productid);
