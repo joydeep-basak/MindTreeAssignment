@@ -129,7 +129,7 @@ public class CartServiceImpl implements CartService {
 		if (entity == null) {
 			throw new CartNotExistsException("User or Cart not found");
 		}
-		List<CartProductEntity>  cartProductEntity = cartProductRepo.getCartData(entity.getCartid());
+		List<CartProductEntity>  cartProductEntity = entity.getCart();//cartProductRepo.getCartData(entity.getCartid());
 		if (cartProductEntity == null || cartProductEntity.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		}
