@@ -1,10 +1,11 @@
 package com.mindtree.assignment.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 
-public class ErrorModel {
+public class ErrorModel implements Serializable {
 
     private HttpStatus httpStatus;
 

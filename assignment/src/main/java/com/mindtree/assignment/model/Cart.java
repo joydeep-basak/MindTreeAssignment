@@ -1,8 +1,11 @@
 package com.mindtree.assignment.model;
 
+import java.io.Serializable;
+
 import com.mindtree.assignment.constraint.Negetive;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,8 +15,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 @ToString
-public class Cart {
+public class Cart implements Serializable {
 
 	private long userid;
 	

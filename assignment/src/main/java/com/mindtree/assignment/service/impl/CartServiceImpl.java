@@ -47,14 +47,14 @@ public class CartServiceImpl implements CartService {
 			cardProductEntity.setCartid(entity.getCartid());
 			cardProductEntity.setProductid(productid);
 			cardProductEntity.setQuantity(quantity);
-			return cartProductRepo.save(cardProductEntity);
+			return cartProductRepo.saveAndFlush(cardProductEntity);
 		} else {
 			if (quantity == 0) {
 				cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
 				return cardProductEntity;
 			} else {
 				cardProductEntity.setQuantity(cardProductEntity.getQuantity() + quantity);
-				return cartProductRepo.save(cardProductEntity);
+				return cartProductRepo.saveAndFlush(cardProductEntity);
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class CartServiceImpl implements CartService {
 //				cardProductEntity.setCartid(entity.getCartid());
 //				cardProductEntity.setProductid(productid);
 //				cardProductEntity.setQuantity(quantity);
-//				return cartProductRepo.save(cardProductEntity);
+//				return cartProductRepo.saveAndFlushcardProductEntity);
 //			}
 			throw new CartNotExistsException("No product with this type exists");
 			
@@ -115,7 +115,7 @@ public class CartServiceImpl implements CartService {
 				return cardProductEntity;
 			} else if (cardProductEntity != null){
 				cardProductEntity.setQuantity(quantity);
-				return cartProductRepo.save(cardProductEntity);
+				return cartProductRepo.saveAndFlush(cardProductEntity);
 			}
 		}
 		return cardProductEntity;
