@@ -24,13 +24,14 @@ public class AssignmentServiceAspect {
 	public void before(JoinPoint joinPoint) {
 		log.info("Execution started of Class :: {} Method :: {}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
 	}
+	
+	@Before("execution(* com.mindtree.assignment.repository.*.*(..))")
+	public void beforeRepository(JoinPoint joinPoint) {
+		log.info("Execution started of Class :: {} Method :: {}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+	}
 
 	@After("execution(* com.mindtree.assignment.controller.*.*(..))")
 	public void after(JoinPoint joinPoint) {
-		log.info("Execution ended of Class :: {} Method :: {}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
-	}
-	@AfterReturning("execution(* com.mindtree.assignment.controller.*.*(..))")
-	public void afterReturning(JoinPoint joinPoint) {
 		log.info("Execution ended of Class :: {} Method :: {}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
 	}
 

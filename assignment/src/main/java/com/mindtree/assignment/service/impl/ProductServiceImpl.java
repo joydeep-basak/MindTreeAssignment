@@ -3,11 +3,12 @@ package com.mindtree.assignment.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.mapstruct.factory.Mappers;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.mindtree.assignment.entity.ProductEntity;
@@ -24,26 +25,34 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "productCache")
 public class ProductServiceImpl implements ProductService {
-	
-//	@Autowired
-//	private ProductDtoToEntityMapper mapper;
+
+	//	@Autowired
+	//	private ProductDtoToEntityMapper mapper;
+	@Autowired
+	private CacheManager cacheManager;
 
 
 	@Autowired
 	private ProductRepository repository;
 
 	@Override
-	public Product findProductById(long id) throws ProductNotFoundException {
+	@Cacheable(
+		      value = "productCache", 
+		      key = "#id" 
+		      )
+	public Product findProductById(Long id) throws ProductNotFoundException {
+		log.info("Called findProductById with id :: {id}", id);
 		Optional<ProductEntity> productEntity = repository.findById(id);
 		Product product = null;
 		if (productEntity.isPresent()) {
 			ProductEntity entity = repository.findById(id).get();
 			if (entity.getProductType().equals(ProductEnum.BOOK.toString())) {
 				product = new Book();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueBook(entity, (Book) product);
-//				product = mapper.sourceToDestinationBook(entity);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueBook(entity, (Book) product);
+				//				product = mapper.sourceToDestinationBook(entity);
 				BeanUtils.copyProperties(entity, product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 			} else {
@@ -51,11 +60,11 @@ public class ProductServiceImpl implements ProductService {
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 			}
-//			product = mapper.sourceToDestinationBook(repository.findById(id).get());
+			//			product = mapper.sourceToDestinationBook(repository.findById(id).get());
 			return product;
 		} else {
 			throw new ProductNotFoundException("Product Not Found");
-//			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
+			//			product = mapper.sourceToDestinationBook(productEntity.orElse(null));
 		}
 	}
 
@@ -66,15 +75,15 @@ public class ProductServiceImpl implements ProductService {
 		productEntityList.forEach(entity -> {
 			if (entity.getProductType().equals(ProductEnum.BOOK.toString())) {
 				Product product = new Book();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueBook(entity, (Book) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueBook(entity, (Book) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			} else {
 				Product product = new Apparal();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueApparal(entity, (Apparal) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueApparal(entity, (Apparal) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
@@ -84,22 +93,21 @@ public class ProductServiceImpl implements ProductService {
 		return productList;
 	}
 
-	@Override
 	public List<Product> findProductByType(String productType) {
 		List<ProductEntity> productEntityList = repository.findProductByType(productType);
 		List<Product> productList = new ArrayList<Product>();
 		productEntityList.forEach(entity -> {
 			if (entity.getProductType().equals(ProductEnum.BOOK.toString())) {
 				Product product = new Book();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueBook(entity, (Book) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueBook(entity, (Book) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
 			} else {
 				Product product = new Apparal();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueApparal(entity, (Apparal) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueApparal(entity, (Apparal) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
@@ -110,41 +118,46 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	
 	public List<Product> findAllProduct() {
 		List<Product> productList = new ArrayList<Product>();
+		Cache cache = cacheManager.getCache("productCache");
+		
 		repository.findAll().forEach(entity -> {
 			if (entity.getProductType().equals(ProductEnum.BOOK.toString())) {
 				Product product = new Book();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueBook(entity, (Book) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueBook(entity, (Book) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
+				cache.put(product.getProductid(), product);
 			} else {
 				Product product = new Apparal();
-//				BeanUtils.copyProperties(entity, product);
-//				copySpecialValueApparal(entity, (Apparal) product);
+				//				BeanUtils.copyProperties(entity, product);
+				//				copySpecialValueApparal(entity, (Apparal) product);
 				product.setProductType(ProductEnum.valueOf(entity.getProductType()));
 				BeanUtils.copyProperties(entity, product);
 				productList.add(product);
+				cache.put(product.getProductid(), product);
 			}
 		});
 		log.info("Total Product listed [{}]", productList.size());
 		return productList;
 	}
-	
+
 	private void copySpecialValueBook(ProductEntity productEntity, Book product) {
 		BeanUtils.copyProperties(productEntity, product);
 	}
-	
+
 	private void copySpecialValueApparal(ProductEntity productEntity, Apparal product) {
 		BeanUtils.copyProperties(productEntity, product);
 	}
 
-//	@Bean
-//	public ProductDtoToEntityMapper getMapper() {
-//		ProductDtoToEntityMapper mapper
-//	    = Mappers.getMapper(ProductDtoToEntityMapper.class);
-//		return mapper;
-//	}
+	//	@Bean
+	//	public ProductDtoToEntityMapper getMapper() {
+	//		ProductDtoToEntityMapper mapper
+	//	    = Mappers.getMapper(ProductDtoToEntityMapper.class);
+	//		return mapper;
+	//	}
 }

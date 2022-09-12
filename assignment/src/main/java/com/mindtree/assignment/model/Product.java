@@ -1,5 +1,7 @@
 package com.mindtree.assignment.model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public abstract class Product {
+public abstract class Product implements Serializable {
 
 	protected long productid;
 	

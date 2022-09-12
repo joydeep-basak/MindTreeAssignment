@@ -10,7 +10,7 @@ public interface ProductService {
 	
 	List<Product> findAllProduct();
 
-	Product findProductById(long id) throws ProductNotFoundException;
+	Product findProductById(Long id) throws ProductNotFoundException;
 	
 	List<Product> findProductByName(String productName) throws ProductNotFoundException;
 	
