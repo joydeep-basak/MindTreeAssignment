@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @Table(name="User")
 @NamedQuery(name = "UserEntity.findUserByName", query = "FROM UserEntity WHERE username like ?1")
-public class UserEntity {
+public class UserEntity implements Comparable<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,18 @@ public class UserEntity {
 
 	@Column(name = "pincode")
 	private String pincode;
+
+	@Override
+	public int compareTo(Long userid) {
+		if (this.userid == userid) {
+			return 0;
+		} else if (this.userid > userid) {
+			return 1;
+		} else {
+			return -1;
+		}
+		
+	}
 
 //	@OneToOne(cascade = CascadeType.DETACH)
 //	@JoinColumn(name = "userid", referencedColumnName = "userid")

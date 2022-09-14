@@ -1,13 +1,17 @@
 package com.mindtree.assignment.entity;
 
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -20,7 +24,7 @@ import lombok.Data;
 @Table(name="Product")
 @NamedQuery(name = "ProductEntity.findProductByName", query = "FROM ProductEntity WHERE prodName like ?1")
 @NamedQuery(name = "ProductEntity.findProductByType", query = "SELECT p FROM ProductEntity p WHERE p.productType = ?1")
-public class ProductEntity {
+public class ProductEntity implements Comparable<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +56,22 @@ public class ProductEntity {
 	
 	private String design;
 	
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "productid", referencedColumnName = "productid")
-//	private CartProductEntity cartProduct;
+	@OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@JoinColumns({    
+		@JoinColumn(name = "productid", referencedColumnName = "productid", insertable = false, updatable = false),
+		})
+	private List<CartProductEntity> cartProduct;
+	
+	@Override
+	public int compareTo(Long productid) {
+		if (this.productid == productid) {
+			return 0;
+		} else if (this.productid > productid) {
+			return 1;
+		} else {
+			return -1;
+		}
+		
+	}
 	
 }

@@ -23,6 +23,7 @@ public interface CartProductRepository extends JpaRepository<CartProductEntity, 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	List<CartProductEntity> getCartData(long cartid);
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	CartProductEntity getCartDataByCartAndProduct(long cartid, long productid);
 	
 	@Modifying

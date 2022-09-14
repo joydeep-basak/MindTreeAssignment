@@ -120,7 +120,7 @@ public class ProductServiceTest {
 
     @DisplayName("Product Service find All Product")
     @Test
-   	void testCalc() {
+   	void testAllProduct() {
 
    		ProductService productService;
 

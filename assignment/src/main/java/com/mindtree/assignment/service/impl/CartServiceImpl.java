@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void removeFromCart(long userid, long productid) throws ProductNotFoundException, UserNotFoundException {
+	public int removeFromCart(long userid, long productid) throws ProductNotFoundException, UserNotFoundException {
 		if (!productRepo.existsById(productid)) {
 			throw new ProductNotFoundException("Product not found");
 		}
@@ -72,7 +72,7 @@ public class CartServiceImpl implements CartService {
 		if (cartProductEntityList == null || cartProductEntityList.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		} else {
-			cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
+			return cartProductRepo.removeAllFromCart(entity.getCartid(), productid);
 		}
 		
 	}
