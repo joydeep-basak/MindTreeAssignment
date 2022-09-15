@@ -14,7 +14,7 @@ public interface CartService {
 	
 	public int removeFromCart(long userid, long productid) throws ProductNotFoundException, UserNotFoundException;
 	
-	public void removeAllFromCart(long userid) throws UserNotFoundException, ProductNotFoundException;
+	public int removeAllFromCart(long userid) throws UserNotFoundException, ProductNotFoundException;
 	
 	public CartProductEntity updateCart(long userid, long productid, int quantity) throws ProductNotFoundException, CartNotExistsException;
 	

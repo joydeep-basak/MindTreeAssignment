@@ -78,7 +78,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void removeAllFromCart(long userid) throws UserNotFoundException, ProductNotFoundException {
+	public int removeAllFromCart(long userid) throws UserNotFoundException, ProductNotFoundException {
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		if (entity == null) {
 			throw new UserNotFoundException("User or Cart not found");
@@ -87,7 +87,7 @@ public class CartServiceImpl implements CartService {
 		if (cartProductEntity == null || cartProductEntity.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		} else {
-			cartProductRepo.removeCart(entity.getCartid());
+			return cartProductRepo.removeCart(entity.getCartid());
 		}
 	}
 

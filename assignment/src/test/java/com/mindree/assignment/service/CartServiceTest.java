@@ -112,7 +112,7 @@ public class CartServiceTest {
 
    	}
     
-    @DisplayName("Cart Service to update cart information")
+    @DisplayName("Cart Service to remove product information from cart")
    	@Test
    	void testRemoveFromCart() throws ProductNotFoundException, CartNotExistsException, JsonMappingException, JsonProcessingException, UserNotFoundException {
     	
@@ -120,6 +120,19 @@ public class CartServiceTest {
    		expect(cartService.removeFromCart(1, 2)).andReturn(1);
    		replay(cartService);
    		int result = cartService.removeFromCart(1, 2);
+
+   		assertEquals(result, 1);
+
+   	}
+    
+    @DisplayName("Cart Service to remove all cart information")
+   	@Test
+   	void testRemoveAllFromCart() throws ProductNotFoundException, CartNotExistsException, JsonMappingException, JsonProcessingException, UserNotFoundException {
+    	
+   		CartService cartService = EasyMock.mock(CartServiceImpl.class);
+   		expect(cartService.removeAllFromCart(1L)).andReturn(1);
+   		replay(cartService);
+   		int result = cartService.removeAllFromCart(1);
 
    		assertEquals(result, 1);
 
