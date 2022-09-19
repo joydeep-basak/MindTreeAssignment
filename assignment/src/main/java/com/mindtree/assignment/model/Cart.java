@@ -2,6 +2,8 @@ package com.mindtree.assignment.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.mindtree.assignment.constraint.Negetive;
 
 import lombok.AllArgsConstructor;
@@ -19,11 +21,13 @@ import lombok.ToString;
 @ToString
 public class Cart implements Serializable {
 
-	private long userid;
+	@NotNull(message = "User id should not be blank")
+	private Long userid;
 	
 	private long cartid;
 	
-	private long productid;
+	@NotNull(message = "Product id should not be blank")
+	private Long productid;
 	
 	private double itemPrice;
 	

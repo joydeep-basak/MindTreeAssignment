@@ -30,31 +30,21 @@ import com.mindtree.assignment.service.impl.CartServiceImpl;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = AssignmentApplication.class)
 public class CartServiceTest {
 	
-	private String noCartDataResponse = "{\r\n" + 
-			"    \"data\": null,\r\n" + 
-			"    \"error\": {\r\n" + 
-			"        \"errorCode\": 404,\r\n" + 
-			"        \"errorMessage\": \"No Product not found in DB\"\r\n" + 
-			"    }\r\n" + 
-			"}";
-	
-	private String presentCartDataResponse = "{\r\n" + 
-			"    \"data\": [\r\n" + 
-			"        {\r\n" + 
-			"            \"userid\": 1,\r\n" + 
-			"            \"cartid\": 1,\r\n" + 
-			"            \"productid\": 1,\r\n" + 
-			"            \"quantity\": 3\r\n" + 
-			"        },\r\n" + 
-			"        {\r\n" + 
-			"            \"userid\": 1,\r\n" + 
-			"            \"cartid\": 1,\r\n" + 
-			"            \"productid\": 2,\r\n" + 
-			"            \"quantity\": 3\r\n" + 
-			"        }\r\n" + 
-			"    ],\r\n" + 
-			"    \"error\": null\r\n" + 
-			"}";
+	/*
+	 * private static String NO_CART_DATA_RESPONSE = "{\r\n" +
+	 * "    \"data\": null,\r\n" + "    \"error\": {\r\n" +
+	 * "        \"errorCode\": 404,\r\n" +
+	 * "        \"errorMessage\": \"No Product not found in DB\"\r\n" + "    }\r\n"
+	 * + "}";
+	 * 
+	 * private String presentCartDataResponse = "{\r\n" + "    \"data\": [\r\n" +
+	 * "        {\r\n" + "            \"userid\": 1,\r\n" +
+	 * "            \"cartid\": 1,\r\n" + "            \"productid\": 1,\r\n" +
+	 * "            \"quantity\": 3\r\n" + "        },\r\n" + "        {\r\n" +
+	 * "            \"userid\": 1,\r\n" + "            \"cartid\": 1,\r\n" +
+	 * "            \"productid\": 2,\r\n" + "            \"quantity\": 3\r\n" +
+	 * "        }\r\n" + "    ],\r\n" + "    \"error\": null\r\n" + "}";
+	 */
 
     @DisplayName("Cart Service to get all cart information")
 	@Test

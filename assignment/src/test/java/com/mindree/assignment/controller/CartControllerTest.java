@@ -45,7 +45,7 @@ public class CartControllerTest {
     @Order(2)
     public void addToCart() throws Exception {
     	log.info("Second Test");
-    	Cart cart = Cart.builder().userid(1).productid(2).quantity(2).build();
+    	Cart cart = Cart.builder().userid(1l).productid(2l).quantity(2).build();
 
         ResponseEntity<ApiResponse> response = restTemplate.postForEntity(new URL("http://localhost:9080/api/cart/v1/addtocart").toString(),cart, ApiResponse.class);
         assertEquals(2, ((java.util.LinkedHashMap<String, Object>) response.getBody().getData()).get("productid"));
@@ -65,7 +65,7 @@ public class CartControllerTest {
     @Order(4)
     public void addToCartFurther() throws Exception {
     	
-    	Cart cart = Cart.builder().userid(1).productid(2).quantity(5).build();
+    	Cart cart = Cart.builder().userid(1l).productid(2l).quantity(5).build();
 
         ResponseEntity<ApiResponse> response = restTemplate.postForEntity(new URL("http://localhost:9080/api/cart/v1/addtocart").toString(),cart, ApiResponse.class);
         assertEquals(2, ((java.util.LinkedHashMap<String, Object>) response.getBody().getData()).get("productid"));
@@ -77,7 +77,7 @@ public class CartControllerTest {
     @Order(5)
     public void updateToCart() throws Exception {
     	log.info("Third Test");
-    	Cart cart = Cart.builder().userid(1).cartid(1).productid(2).quantity(5).build();
+    	Cart cart = Cart.builder().userid(1l).cartid(1).productid(2l).quantity(5).build();
 
         ResponseEntity<ApiResponse> response = restTemplate.postForEntity(new URL("http://localhost:9080/api/cart/v1/updatetocart").toString(),cart, ApiResponse.class);
         assertEquals(200, response.getStatusCodeValue());

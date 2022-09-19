@@ -30,7 +30,7 @@ public class UserServiceTest {
 
 	private List<User> userList = new ArrayList<User>();
 
-	private String data = "{\r\n" + 
+	private String USER_DATA = "{\r\n" + 
 			"    \"data\": [\r\n" + 
 			"        {\r\n" + 
 			"            \"userid\": 1,\r\n" + 
@@ -63,7 +63,7 @@ public class UserServiceTest {
 	@PostConstruct
 	public void setMockData() throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		ApiResponse response = objectMapper.readValue(data, ApiResponse.class);
+		ApiResponse response = objectMapper.readValue(USER_DATA, ApiResponse.class);
 		List<LinkedHashMap<String, Object>> objectList = (List<LinkedHashMap<String, Object>>) response.getData();
 		objectList.forEach(e -> {
 			User user = objectMapper.convertValue(e, User.class);

@@ -36,7 +36,7 @@ public class ProductServiceTest {
 	
 	private List<Product> productList = new ArrayList<Product>();
 	
-	private String data = "{\r\n" + 
+	private static String PRODUCT_DATA = "{\r\n" + 
 			"    \"data\": [\r\n" + 
 			"        {\r\n" + 
 			"            \"productid\": 1,\r\n" + 
@@ -100,7 +100,7 @@ public class ProductServiceTest {
    @PostConstruct
    public void setMockData() throws JsonMappingException, JsonProcessingException {
     	ObjectMapper objectMapper = new ObjectMapper();
-    	ApiResponse response = objectMapper.readValue(data, ApiResponse.class);
+    	ApiResponse response = objectMapper.readValue(PRODUCT_DATA, ApiResponse.class);
     	List<LinkedHashMap<String, Object>> objectList = (List<LinkedHashMap<String, Object>>) response.getData();
     	objectList.forEach(e -> {
     		ProductEntity entity = objectMapper.convertValue(e, ProductEntity.class);

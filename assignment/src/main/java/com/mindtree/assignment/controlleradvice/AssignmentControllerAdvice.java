@@ -54,8 +54,8 @@ public class AssignmentControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 //            ErrorModel error = new ErrorModel(HttpStatus.BAD_REQUEST, "Validation Error", ex.getBindingResult().toString());
             ApiError apiError = new ApiError();
-            apiError.setErrorCode(HttpStatus.NOT_FOUND.value());
-        	apiError.setErrorMessage("No Product exist in the cart");
+            apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
+        	apiError.setErrorMessage(ex.getAllErrors().get(0).getDefaultMessage());
             return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
     
