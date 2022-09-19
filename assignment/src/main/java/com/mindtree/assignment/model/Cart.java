@@ -25,6 +25,10 @@ public class Cart implements Serializable {
 	
 	private long productid;
 	
+	private double itemPrice;
+	
+	private String productName;
+	
 	@Negetive(message="Quantity can not be negetive")
 	private int quantity;
 }

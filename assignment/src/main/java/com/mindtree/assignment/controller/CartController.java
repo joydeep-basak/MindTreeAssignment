@@ -1,7 +1,5 @@
 package com.mindtree.assignment.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -20,6 +18,7 @@ import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
 import com.mindtree.assignment.model.Cart;
+import com.mindtree.assignment.model.CartSummary;
 import com.mindtree.assignment.service.CartService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +32,11 @@ public class CartController {
 	private CartService cartService;
 	
 	@GetMapping(path="/all/{userid}", produces = "application/json")
-	public ResponseEntity<List<Cart>> viewAllCart(@PathVariable("userid") long userid) throws ProductNotFoundException, UserNotFoundException, CartNotExistsException {
+	public ResponseEntity<CartSummary> viewAllCart(@PathVariable("userid") long userid) throws ProductNotFoundException, UserNotFoundException, CartNotExistsException {
 		log.info("Showing cart of user [{}]", userid);
-		List<Cart> cartList = cartService.viewCart(userid);
-		log.info("Cart size of user [{}]", cartList.size());
-		return new ResponseEntity<>(cartList, HttpStatus.OK);
+		CartSummary cartSummary = cartService.viewCart(userid);
+		log.info("Cart size of user [{}]", cartSummary.getCartList().size());
+		return new ResponseEntity<>(cartSummary, HttpStatus.OK);
 	}
 
 	@PostMapping(path="/addtocart", produces = "application/json", consumes = "application/json")

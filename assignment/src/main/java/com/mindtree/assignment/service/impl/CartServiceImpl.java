@@ -2,6 +2,7 @@ package com.mindtree.assignment.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
 import com.mindtree.assignment.model.Cart;
+import com.mindtree.assignment.model.CartSummary;
 import com.mindtree.assignment.repository.CartProductRepository;
 import com.mindtree.assignment.repository.CartRepository;
 import com.mindtree.assignment.repository.ProductRepository;
@@ -124,23 +126,28 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<Cart> viewCart(long userid) throws ProductNotFoundException, CartNotExistsException {
+	public CartSummary viewCart(long userid) throws ProductNotFoundException, CartNotExistsException {
+		CartSummary cartSummary = new CartSummary();
 		CartEntity entity = cartRepo.findCartByUserId(userid);
 		if (entity == null) {
 			throw new CartNotExistsException("User or Cart not found");
 		}
-		List<CartProductEntity>  cartProductEntity = entity.getCart();//cartProductRepo.getCartData(entity.getCartid());
+		List<CartProductEntity> cartProductEntity = entity.getCart();//cartProductRepo.getCartData(entity.getCartid());
 		if (cartProductEntity == null || cartProductEntity.isEmpty()) {
 			throw new ProductNotFoundException("Product not found");
 		}
 		List<Cart> cartList = new ArrayList<>(cartProductEntity.size());
-		cartProductEntity.forEach(e -> {
+		cartProductEntity.forEach(cartProduct -> {
 			Cart cart = new Cart();
 			cart.setUserid(userid);
-			BeanUtils.copyProperties(e, cart);
+			BeanUtils.copyProperties(cartProduct, cart);
+			cart.setItemPrice((cartProduct.getQuantity() * cartProduct.getProduct().getPrice()));
 			cartList.add(cart);
 		});
-		return cartList;
+		
+		cartSummary.setTotalPrice(cartList.stream().collect(Collectors.summingDouble(Cart::getItemPrice)));
+		cartSummary.setCartList(cartList);;
+		return cartSummary;
 	}
 
 }

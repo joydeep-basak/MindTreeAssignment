@@ -1,12 +1,10 @@
 package com.mindtree.assignment.service;
 
-import java.util.List;
-
 import com.mindtree.assignment.entity.CartProductEntity;
 import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
-import com.mindtree.assignment.model.Cart;
+import com.mindtree.assignment.model.CartSummary;
 
 public interface CartService {
 
@@ -18,5 +16,5 @@ public interface CartService {
 	
 	public CartProductEntity updateCart(long userid, long productid, int quantity) throws ProductNotFoundException, CartNotExistsException;
 	
-	public List<Cart> viewCart(long userid) throws ProductNotFoundException, CartNotExistsException;
+	public CartSummary viewCart(long userid) throws ProductNotFoundException, CartNotExistsException;
 }

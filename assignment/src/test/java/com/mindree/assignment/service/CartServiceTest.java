@@ -22,6 +22,7 @@ import com.mindtree.assignment.exception.CartNotExistsException;
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.exception.UserNotFoundException;
 import com.mindtree.assignment.model.Cart;
+import com.mindtree.assignment.model.CartSummary;
 import com.mindtree.assignment.service.CartService;
 import com.mindtree.assignment.service.impl.CartServiceImpl;
 
@@ -58,10 +59,10 @@ public class CartServiceTest {
     @DisplayName("Cart Service to get all cart information")
 	@Test
 	void testGetCartInfo() throws ProductNotFoundException, CartNotExistsException, JsonMappingException, JsonProcessingException {
-    	IExpectationSetters<List<Cart>> cartList;
+    	IExpectationSetters<CartSummary> cartSummary;
 
 		CartService cartService = EasyMock.mock(CartServiceImpl.class);
-		cartList = expect(cartService.viewCart(1L)).andThrow(new ProductNotFoundException("Product not found"));
+		cartSummary = expect(cartService.viewCart(1L)).andThrow(new ProductNotFoundException("Product not found"));
 		replay(cartService);
 
 		assertThrows(ProductNotFoundException.class,()->{ cartService.viewCart(1);});
