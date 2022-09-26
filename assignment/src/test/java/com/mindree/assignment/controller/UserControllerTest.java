@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.net.URL;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,7 @@ public class UserControllerTest {
     private TestRestTemplate restTemplate;
     
     @Test
+    @Transactional
     public void getAllUser() throws Exception {
 
         ResponseEntity<ApiResponse> response = restTemplate.getForEntity(new URL("http://localhost:9080/api/user/v1/allusers").toString(), ApiResponse.class);

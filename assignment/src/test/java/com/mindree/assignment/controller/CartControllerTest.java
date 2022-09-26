@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URL;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,7 @@ public class CartControllerTest {
 
     @Test
     @Order(1)
+    @Transactional
     public void getViewCart() throws Exception {
     	log.info("First Test");
         ResponseEntity<ApiResponse> response = restTemplate.getForEntity(new URL("http://localhost:9080/api/cart/v1/all/1").toString(), ApiResponse.class);
@@ -43,6 +46,7 @@ public class CartControllerTest {
     
     @Test
     @Order(2)
+    @Transactional
     public void addToCart() throws Exception {
     	log.info("Second Test");
     	Cart cart = Cart.builder().userid(1l).productid(2l).quantity(2).build();
@@ -55,6 +59,7 @@ public class CartControllerTest {
     
     @Test
     @Order(3)
+    @Transactional
     public void getViewCartAfterInsert() throws Exception {
 
         ResponseEntity<ApiResponse> response = restTemplate.getForEntity(new URL("http://localhost:9080/api/cart/v1/all/1").toString(), ApiResponse.class);
@@ -63,6 +68,7 @@ public class CartControllerTest {
 //    
     @Test
     @Order(4)
+    @Transactional
     public void addToCartFurther() throws Exception {
     	
     	Cart cart = Cart.builder().userid(1l).productid(2l).quantity(5).build();
@@ -75,6 +81,7 @@ public class CartControllerTest {
     
     @Test
     @Order(5)
+    @Transactional
     public void updateToCart() throws Exception {
     	log.info("Third Test");
     	Cart cart = Cart.builder().userid(1l).cartid(1).productid(2l).quantity(5).build();
