@@ -1,0 +1,25 @@
+<configuration>
+
+	<timestamp key="byDay" datePattern="yyyyMMdd" />
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>D:\\app\\logs\\log-${byDay}.txt </file>
+		<append>true</append>
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%t][%X{calledid}] %5p %c{1} - %m - %n</pattern>
+		</encoder>
+	</appender>
+	<appender name="stdout"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%t][%X{calledid}] %5p %c{1} - %m - %n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="stdout" />
+	</root>
+
+</configuration>

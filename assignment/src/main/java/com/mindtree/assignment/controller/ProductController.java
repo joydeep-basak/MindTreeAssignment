@@ -1,6 +1,7 @@
 package com.mindtree.assignment.controller;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mindtree.assignment.exception.ProductNotFoundException;
 import com.mindtree.assignment.model.Product;
+import com.mindtree.assignment.model.Student;
 import com.mindtree.assignment.service.ProductService;
+import com.mindtree.assignment.service.impl.CrudServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductController {
 	
 	@Autowired
-	ProductService productService;
-	
+	private ProductService productService;
+	 
 	@GetMapping("/all")
 	public ResponseEntity<List<Product>> getAllProduct() {
 		return new ResponseEntity<List<Product>>(productService.findAllProduct(), HttpStatus.OK);
@@ -45,6 +48,8 @@ public class ProductController {
 				.build();*/
 		
 //		product.setProductType(ProductEnum.APPARAL);
+		
+		
 		
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}

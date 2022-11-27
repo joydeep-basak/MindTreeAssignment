@@ -1,6 +1,7 @@
 package com.mindtree.assignment.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +23,6 @@ public abstract class Product implements Serializable {
 	protected float price;
 	
 	protected ProductEnum productType;
+	
+	protected List<Student> studentList;
 }

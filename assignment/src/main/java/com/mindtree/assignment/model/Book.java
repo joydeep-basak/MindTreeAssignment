@@ -1,5 +1,7 @@
 package com.mindtree.assignment.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +24,8 @@ public class Book extends Product{
 
 	@Builder
 	public Book(String genre, String author, String publications, int productid,		
-			String prodName, float price) {
-		super(productid, prodName, price, ProductEnum.BOOK);
+			String prodName, float price, List<Student> studentList) {
+		super(productid, prodName, price, ProductEnum.BOOK, studentList);
 		this.genre = genre;   
 		this.author = author;
 		this.publications = publications;
