@@ -6,7 +6,7 @@
 		<append>true</append>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>[%t][%X{calledid}] %5p %c{1} - %m - %n</pattern>
+			<pattern>[%t]%5p [${spring.zipkin.service.name}:${spring.application.name},%X{traceId:-},%X{spanId:-}]</pattern>
 		</encoder>
 	</appender>
 	<appender name="stdout"

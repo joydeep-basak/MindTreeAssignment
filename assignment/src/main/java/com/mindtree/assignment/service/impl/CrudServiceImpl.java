@@ -46,7 +46,7 @@ public class CrudServiceImpl {
 		log.info("Starting call to find All student ");
 		ResponseEntity<String> response
 		  = restTemplateForCrudApp.getForEntity(fooResourceUrl , String.class);
-		return new ResponseEntity(response.getBody(), HttpStatus.OK);
+		return new ResponseEntity<String>(response.getBody(), HttpStatus.OK);
 	}
 	
 	@Async
