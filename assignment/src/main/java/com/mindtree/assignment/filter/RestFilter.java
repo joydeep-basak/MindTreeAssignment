@@ -1,7 +1,10 @@
 package com.mindtree.assignment.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -34,8 +37,22 @@ public class RestFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 		log.info("Token Filter pathInfo:" + request.getRequestURI());
+		Iterator<String> hIteraator = request.getHeaderNames().asIterator();
+		while (hIteraator.hasNext()) {
+			String hName = hIteraator.next();
+			log.info(String.format("Request Header Name :: [%s]  Request Header Value [%s]", hName, request.getHeader(hName)));
+		};
+		if (request.getContentLength() != -1) {
+			byte[] content = new byte[request.getContentLength()];
+			request.getInputStream().read(content);
+			log.info("Request Body :: " + new String(content));
+		}
+		
+		response.getHeaderNames().stream().forEach(headerName -> {
+			log.info("Response Header Name :: [%s]  ResponseHeader Value [%s]", headerName, response.getHeader(headerName));
+		});
 
-		filterChain.doFilter(request, servletResponse);
+		filterChain.doFilter(request, servletResponse); 
 	}
 
 	@Override
