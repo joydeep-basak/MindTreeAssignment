@@ -26,7 +26,7 @@ public class Filters {
     log.info("Setting up restRegistrationBean");
     FilterRegistrationBean<RestFilter> filterRegistrationBean = new FilterRegistrationBean();
     filterRegistrationBean.setFilter(new RestFilter());
-    filterRegistrationBean.setUrlPatterns(Collections.singletonList("/api/product/v1/*"));
+    filterRegistrationBean.setUrlPatterns(Collections.singletonList("/api/*"));
     return filterRegistrationBean;
   }
 }

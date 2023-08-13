@@ -17,20 +17,36 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class RestFilter implements Filter {
+public class RestFilter extends OncePerRequestFilter  {
+
+//	@Override
+//	public void init(FilterConfig filterConfig) throws ServletException {
+//		log.info("Intializing filter");
+//	}
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		log.info("Intializing filter");
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		return super.shouldNotFilter(request);
 	}
 
 	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+	protected boolean shouldNotFilterAsyncDispatch() {
+		return super.shouldNotFilterAsyncDispatch();
+	}
+
+	@Override
+	protected boolean shouldNotFilterErrorDispatch() {
+		return super.shouldNotFilterErrorDispatch();
+	}
+
+	@Override
+	public void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse servletResponse,
 			FilterChain filterChain) throws IOException, ServletException {
 		MDC.put("calledid", UUID.randomUUID().toString());
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -49,7 +65,7 @@ public class RestFilter implements Filter {
 		}
 		
 		response.getHeaderNames().stream().forEach(headerName -> {
-			log.info("Response Header Name :: [%s]  ResponseHeader Value [%s]", headerName, response.getHeader(headerName));
+			log.info("Response Header Name :: [{}]  ResponseHeader Value [{}]", headerName, response.getHeader(headerName));
 		});
 
 		filterChain.doFilter(request, servletResponse); 

@@ -12,10 +12,10 @@ INSERT INTO Product ( prodName, price, productType, atype, brand, design)
 VALUES ('Appr3', 212.33, 'APPARAL','cat3', 'Anchor3', 'Glossy3');
 
 
-INSERT INTO User (username, address, pincode) VALUES ('user1', 'address1', 'pincode1');
-INSERT INTO User (username, address, pincode) VALUES ('user2', 'address2', 'pincode2');
-INSERT INTO User (username, address, pincode) VALUES ('user3', 'address3', 'pincode3');
-INSERT INTO User (username, address, pincode) VALUES ('user4', 'address4', 'pincode4');
+INSERT INTO User (username, address, pincode) VALUES ('user1', 'address1 for user1', 'pincode1');
+INSERT INTO User (username, address, pincode) VALUES ('user2', 'address2 for user2', 'pincode2');
+INSERT INTO User (username, address, pincode) VALUES ('user3', 'address3 for user3', 'pincode3');
+INSERT INTO User (username, address, pincode) VALUES ('user4', 'address4 for user4', 'pincode4');
 
 INSERT INTO CART (userid, cartid) values (1, 1);
 INSERT INTO CART (userid, cartid) values (2, 2);

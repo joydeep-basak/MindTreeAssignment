@@ -44,6 +44,7 @@ public class AssignmentServiceAspect {
 		apiResponse.setData(response.getBody());
 		apiResponse.setError(null);
 		ResponseEntity<ApiResponse> newresponse = new ResponseEntity<ApiResponse>(apiResponse, response.getStatusCode());
+		log.info("Response :: {}", newresponse);
 		return newresponse;
 	}
 	
